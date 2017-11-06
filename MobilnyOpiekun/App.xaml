@@ -5,4 +5,34 @@
     xmlns:local="using:MobilnyOpiekun"
     RequestedTheme="Light">
 
+    <!-- Kolory, style, itp. -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="Niebieski">#0e4375</SolidColorBrush>
+            <SolidColorBrush x:Key="Zolty">#f5c851</SolidColorBrush>
+            <SolidColorBrush x:Key="Pomaranczowy">#ef823f</SolidColorBrush>
+            <SolidColorBrush x:Key="Rozowy">#d90368</SolidColorBrush>
+            <SolidColorBrush x:Key="Zielony">#00cc66</SolidColorBrush>
+
+            <Style x:Key="btnMenuStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="{StaticResource Niebieski}"/>
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="Background" Value="{StaticResource Pomaranczowy}"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+            </Style>
+
+            <Style x:Key="txtMenuStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource Niebieski}"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="mnuItemStyle" TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Height" Value="50"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

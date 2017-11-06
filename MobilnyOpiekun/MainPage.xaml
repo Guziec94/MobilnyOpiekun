@@ -5,9 +5,88 @@
     xmlns:local="using:MobilnyOpiekun"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Background="White">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <SplitView x:Name="HamburgerMenu"
+        IsPaneOpen="False" 
+        DisplayMode="CompactOverlay" 
+        CompactPaneLength="50" OpenPaneLength="175">
+        <SplitView.Pane>
+            <StackPanel Background="{StaticResource Pomaranczowy}">
+                <Button x:Name="btnHamburger" 
+                    Style="{StaticResource btnMenuStyle}"
+                    Content="&#xE700;" 
+                    Click="btnHamburger_Click" />
+                <!-- menu item -->
+                <StackPanel x:Name="mnuStronaGlowna"
+                        Style="{StaticResource mnuItemStyle}"
+                        Tapped="mnuItem_Tapped">
+                    <Button x:Name="btnMenuStronaGlowna" 
+                        Style="{StaticResource btnMenuStyle}"
+                        Content="&#xE80F;"/>
+                    <TextBlock x:Name="txtMenuStronaGlowna"
+                        Style="{StaticResource txtMenuStyle}"
+                        Text="Strona główna"/>
+                </StackPanel>
+                <!-- menu item -->
+                <StackPanel x:Name="mnuStatystyka"
+                        Style="{StaticResource mnuItemStyle}"
+                        Tapped="mnuItem_Tapped">
+                    <Button x:Name="btnMenuStatystyka" 
+                        Style="{StaticResource btnMenuStyle}"
+                        Content="&#xE726;"/>
+                    <TextBlock x:Name="txtMenuStatystyka"
+                        Style="{StaticResource txtMenuStyle}"
+                        Text="Statystyka"/>
+                </StackPanel>
+                <!-- menu item -->
+                <StackPanel x:Name="mnuWezwijPomoc"
+                        Style="{StaticResource mnuItemStyle}"
+                        Tapped="mnuItem_Tapped">
+                    <Button x:Name="btnMenuWezwijPomoc" 
+                        Style="{StaticResource btnMenuStyle}"
+                        FontFamily="Segoe UI Symbol"
+                        Content="&#x1f198;" Padding="1,0,0,6"/>
+                    <TextBlock x:Name="txtMenuWezwijPomoc"
+                        Style="{StaticResource txtMenuStyle}"
+                        Text="Wezwij Pomoc"/>
+                </StackPanel>
+                <!-- menu item -->
+                <StackPanel x:Name="mnuUstawienia"
+                        Style="{StaticResource mnuItemStyle}"
+                        Tapped="mnuItem_Tapped">
+                    <Button x:Name="btnMenuUstawienia" 
+                        Style="{StaticResource btnMenuStyle}"
+                        Content="&#xE713;"/>
+                    <TextBlock x:Name="txtMenuUstawienia"
+                        Style="{StaticResource txtMenuStyle}"
+                        Text="Ustawienia"/>
+                </StackPanel>
+                <!-- menu item -->
+                <StackPanel x:Name="mnuPomoc" 
+                        Style="{StaticResource mnuItemStyle}"
+                        Tapped="mnuItem_Tapped">
+                    <Button x:Name="btnMenuPomoc"
+                        Style="{StaticResource btnMenuStyle}"
+                        Content="&#xE897;"/>
+                    <TextBlock x:Name="txtMenuPomoc"
+                        Style="{StaticResource txtMenuStyle}"
+                        Text="Pomoc"/>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <StackPanel Orientation="Vertical" Margin="-1,0,-1,0">
+                <Border Height="50" Background="{StaticResource Pomaranczowy}">
+                    <TextBlock x:Name="txtTytulStrony"
+                        Text="Tytuł strony"
+                        FontSize="30" 
+                        TextAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource Niebieski}"/>
+                </Border>
+                <Frame x:Name="zawartosc"/>
+            </StackPanel>
+        </SplitView.Content>
+    </SplitView>
 </Page>
