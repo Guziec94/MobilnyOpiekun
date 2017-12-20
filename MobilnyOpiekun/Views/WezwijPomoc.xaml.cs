@@ -12,7 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using MobilnyOpiekun.Classes;
+using Windows.UI.Popups;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MobilnyOpiekun.Views
@@ -25,6 +26,27 @@ namespace MobilnyOpiekun.Views
         public WezwijPomoc()
         {
             this.InitializeComponent();
+            if (!WiadomoscSMS.czyZainicjalizowane)
+            {
+                nazwaAsync();
+            }
+        }
+
+        async void nazwaAsync()
+        {
+            ContentDialog md = new ContentDialog();
+            md.Title = "Funkcja wzywania pomocy jest niedostępna";
+            md.Content = "Nie znaleziono urządzenia, które może wysyłać SMS. Funkcja wzywania pomocy będzie niedostępna. Chcesz przejść do ustawień aby jeszcze raz zainicjalizować wysyłanie SMS?";
+            md.PrimaryButtonText = "Tak";
+            md.SecondaryButtonText = "Nie";
+            if (await md.ShowAsync() == ContentDialogResult.Primary)
+            {
+                KlasaPomocniczna.PrzejdzDo("Ustawienia", "Ustawienia");
+            }
+            else
+            {
+                maskaBlokujaca.Visibility = Visibility.Visible;
+            }
         }
     }
 }

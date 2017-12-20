@@ -12,20 +12,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MobilnyOpiekun.Classes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace MobilnyOpiekun
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Główny widok aplikacji, to tutaj zawarte jest hamburger menu oraz logika odpowiadająca za przechodzenie pomiędzy podstr.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool czyWiadomosciAktywne;
         public MainPage()
         {
             InitializeComponent();
-            ShowStatusBar();
+            KlasaPomocniczna.PokazPasekStanuAsync();
+            czyWiadomosciAktywne = WiadomoscSMS.InicjalizujSMS();
+            KlasaPomocniczna.mainPageInstance = this;
         }
 
         private void btnHamburger_Click(object sender, RoutedEventArgs e)
@@ -33,46 +37,44 @@ namespace MobilnyOpiekun
             HamburgerMenu.IsPaneOpen = !HamburgerMenu.IsPaneOpen;
         }
 
-        private void mnuItem_Tapped(object sender, TappedRoutedEventArgs e)
+        public void mnuItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            switch ((sender as StackPanel).Name)
-            {
-                case "mnuStronaGlowna":
-                    txtTytulStrony.Text = "Strona główna";
-                    zawartosc.Navigate(typeof(Views.StronaGlowna));
-                    break;
-                case "mnuStatystyka":
-                    txtTytulStrony.Text = "Statystyka ruchu";
-                    zawartosc.Navigate(typeof(Views.Statystyka));
-                    break;
-                case "mnuWezwijPomoc":
-                    txtTytulStrony.Text = "Wzywanie pomocy";
-                    zawartosc.Navigate(typeof(Views.WezwijPomoc));
-                    break;
-                case "mnuUstawienia":
-                    txtTytulStrony.Text = "Ustawienia";
-                    zawartosc.Navigate(typeof(Views.Ustawienia));
-                    break;
-                case "mnuPomoc":
-                    txtTytulStrony.Text = "Pomoc";
-                    zawartosc.Navigate(typeof(Views.Pomoc));
-                    break;
-            }
+            StackPanel wybranyElement = sender as StackPanel;
+            // Ustawienie tytułu wyświetlanej strony
+            string tytulStrony = (wybranyElement.Children.FirstOrDefault(x => x.GetType().Name == "TextBlock") as TextBlock).Text;
+            txtTytulStrony.Text = tytulStrony;
+            // Załadowanie strony do obiektu Frame
+            var stronaDoWyswietlenia = "MobilnyOpiekun.Views." + wybranyElement.Name.Substring(3);
+            zawartosc.Navigate(Type.GetType(stronaDoWyswietlenia), this);
+
             if (HamburgerMenu.IsPaneOpen)
             {
                 HamburgerMenu.IsPaneOpen = false;
             }
         }
 
-        // show the StatusBar
-        private async void ShowStatusBar()
+        public void przejdzDo(string strona, string tytulStrony)
         {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            // Ustawienie tytułu wyświetlanej strony
+            txtTytulStrony.Text = tytulStrony;
+            // Załadowanie strony do obiektu Frame
+            var stronaDoWyswietlenia = "MobilnyOpiekun.Views." + strona;
+            zawartosc.Navigate(Type.GetType(stronaDoWyswietlenia), this);
+
+            if (HamburgerMenu.IsPaneOpen)
             {
-                var statusbar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                await statusbar.ShowAsync();
-                statusbar.BackgroundOpacity = 1;
+                HamburgerMenu.IsPaneOpen = false;
             }
+        }
+
+        public void przejdzDoStronyGlownej()
+        {
+            mnuItem_Tapped(mnuStronaGlowna, new TappedRoutedEventArgs());
+        }
+
+        public void przejdzDoUstawien()
+        {
+            mnuItem_Tapped(mnuUstawienia, new TappedRoutedEventArgs());
         }
     }
 }

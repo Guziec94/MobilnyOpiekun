@@ -5,7 +5,9 @@
     xmlns:local="using:MobilnyOpiekun"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Background="White">
+    mc:Ignorable="d" Background="{StaticResource UserAccentColor}"
+    Height="640"
+    Width="360">
 
     <SplitView x:Name="HamburgerMenu"
         IsPaneOpen="False" 
@@ -49,7 +51,7 @@
                         Content="&#x1f198;" Padding="1,0,0,6"/>
                     <TextBlock x:Name="txtMenuWezwijPomoc"
                         Style="{StaticResource txtMenuStyle}"
-                        Text="Wezwij Pomoc"/>
+                        Text="Wezwij pomoc"/>
                 </StackPanel>
                 <!-- menu item -->
                 <StackPanel x:Name="mnuUstawienia"
@@ -76,8 +78,12 @@
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
-            <StackPanel Orientation="Vertical" Margin="-1,0,-1,0">
-                <Border Height="50" Background="{StaticResource Pomaranczowy}">
+            <StackPanel 
+                Orientation="Vertical" 
+                Margin="-1,0,-1,0">
+                <Border 
+                    Height="50" 
+                    Background="{StaticResource Pomaranczowy}">
                     <TextBlock x:Name="txtTytulStrony"
                         Text="Tytuł strony"
                         FontSize="30" 
@@ -85,7 +91,7 @@
                         VerticalAlignment="Center"
                         Foreground="{StaticResource Niebieski}"/>
                 </Border>
-                <Frame x:Name="zawartosc"/>
+                <Frame x:Name="zawartosc" Height="590" Width="310"/>
             </StackPanel>
         </SplitView.Content>
     </SplitView>

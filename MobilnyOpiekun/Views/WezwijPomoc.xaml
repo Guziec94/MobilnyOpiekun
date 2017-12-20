@@ -8,6 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <RelativePanel x:Name="maskaBlokujaca" Visibility="Collapsed" Opacity=".5" Background="Gray">
+            <TextBlock Text="Funkcja niedostępna, więcej informacji znajdziesz na stronie Pomoc." Foreground="Red" FontSize="40" FontWeight="Bold" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        </RelativePanel>
     </Grid>
 </Page>

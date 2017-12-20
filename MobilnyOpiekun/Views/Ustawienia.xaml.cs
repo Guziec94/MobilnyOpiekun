@@ -1,31 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Contacts;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MobilnyOpiekun.Classes;
+using System.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MobilnyOpiekun.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Strona umożliwiająca konfigurację parametrów aplikacji.
     /// </summary>
     public sealed partial class Ustawienia : Page
     {
         ApplicationDataContainer localSettings;
         ApplicationDataCompositeValue composite;
+        MainPage mainPageInstance;
 
         public Ustawienia()
         {
@@ -47,36 +40,63 @@ namespace MobilnyOpiekun.Views
             }
         }
 
+        // Funkcja przechwytująca parametr przekazany podczas nawigacji pomiędzy stronami.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            mainPageInstance = e.Parameter as MainPage;
+        }
+
         private void btnOdrzucUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage));
+            mainPageInstance.przejdzDoStronyGlownej();
         }
 
         private void btnZachowajUstawienia_Click(object sender, RoutedEventArgs e)
         {
             localSettings.Values["exampleCompositeSetting"] = composite;
-            Frame.Navigate(typeof(MainPage));
+            mainPageInstance.przejdzDoStronyGlownej();
         }
 
-        private async void btnWybierzKontakt_ClickAsync(object sender, RoutedEventArgs e)
+        private async void btnDodajOpiekuna_Click(object sender, RoutedEventArgs e)
         {
-            try
+            DodajOpiekuna cD = new DodajOpiekuna();
+            if (await cD.ShowAsync() == ContentDialogResult.Primary)
             {
-                ContactPicker contactPicker = new ContactPicker();
-                contactPicker.CommitButtonText = "Select";
-                contactPicker.SelectionMode = ContactSelectionMode.Fields;
-                contactPicker.DesiredFieldsWithContactFieldType.Add(ContactFieldType.PhoneNumber);
-
-                Contact contact = await contactPicker.PickContactAsync();
-                if (contact != null)
-                {
-                    string numer = contact.Phones.FirstOrDefault().Number;
-                }
+                Opiekun doDodania = cD.utworzonyOpiekun;
+                stpaOpiekunowie.Children.Add(doDodania.GenerujStackPanel());
             }
-            catch (Exception ex)
+        }
+
+        private async Task<string> InputTextDialogAsync(string tytul, string btnZatwierdz, bool dwaPrzyciski = false, string btnOdrzuc = "Odrzuć")
+        {
+            TextBox inputTextBox = new TextBox
             {
-
+                AcceptsReturn = false,
+                Height = 32
+            };
+            ContentDialog dialog = new ContentDialog
+            {
+                Content = inputTextBox,
+                Title = tytul,
+                IsSecondaryButtonEnabled = dwaPrzyciski,
+                PrimaryButtonText = btnZatwierdz,
+                SecondaryButtonText = btnOdrzuc,
+            };
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                return inputTextBox.Text;
             }
+            else
+            {
+                return "";
+            }
+        }
+
+        private void stpaOpiekunowie_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            StackPanel wybranyElement = sender as StackPanel;
+            UIElementCollection cos = wybranyElement.Children;
         }
     }
 }

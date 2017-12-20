@@ -95,8 +95,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\KlasaPomocniczna.cs" />
+    <Compile Include="Classes\Opiekun.cs" />
+    <Compile Include="Classes\WiadomoscSMS.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DodajOpiekuna.xaml.cs">
+      <DependentUpon>DodajOpiekuna.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pomoc.xaml.cs">
       <DependentUpon>Pomoc.xaml</DependentUpon>
@@ -140,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DodajOpiekuna.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pomoc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

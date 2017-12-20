@@ -13,7 +13,19 @@
             <SolidColorBrush x:Key="Pomaranczowy">#ef823f</SolidColorBrush>
             <SolidColorBrush x:Key="Rozowy">#d90368</SolidColorBrush>
             <SolidColorBrush x:Key="Zielony">#00cc66</SolidColorBrush>
+            <SolidColorBrush x:Key="UserAccentColor" Color="{ThemeResource SystemAccentColor}" />
+            
+            <!--#region Nadpisane domyślne style-->
+            <Style TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            </Style>
+            
+            <Style TargetType="TextBox">
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            </Style>
+            <!--#endregion-->
 
+            <!--#region Moje zdefiniowane style -->
             <Style x:Key="btnMenuStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="{StaticResource Niebieski}"/>
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
@@ -33,6 +45,7 @@
                 <Setter Property="Orientation" Value="Horizontal"/>
                 <Setter Property="Height" Value="50"/>
             </Style>
+            <!--#endregion-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>
