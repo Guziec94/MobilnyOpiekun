@@ -20,13 +20,13 @@ using System.Threading.Tasks;
 namespace MobilnyOpiekun
 {
     /// <summary>
-    /// Główny widok aplikacji, to tutaj zawarte jest hamburger menu oraz logika odpowiadająca za przechodzenie pomiędzy podstr.
+    /// Główny widok aplikacji, to tutaj zawarte jest hamburger menu, logika odpowiadająca za przechodzenie pomiędzy podstronami oraz ładowanie konfiguracji.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        bool czyWiadomosciAktywne;
-        bool czyLokalizacjaAktywna;
-        bool czyDaneORuchuAktywne;
+        bool dostepDoWiadomosci;
+        bool dostepDoLokalizacja;
+        bool dostepDoDaneORuchu;
         bool czyAgentAktywny;
         public MainPage()
         {
@@ -34,14 +34,16 @@ namespace MobilnyOpiekun
             KlasaPomocniczna.PokazPasekStanuAsync();
             Task inicjalizacja = new Task(async () =>
             {
-                czyWiadomosciAktywne = WiadomoscSMS.InicjalizujSMS();
-                czyLokalizacjaAktywna = await Lokalizacja.InicjalizujGPS();
+                //dostepDoWiadomosci = WiadomoscSMS.InicjalizujSMS();
+                //dostepDoLokalizacja = await Lokalizacja.InicjalizujGPS();
                 //Lokalizacja.PobierzLokalizacje();
-                czyDaneORuchuAktywne = await DaneORuchu.InicjalizujDaneORuchu();
-                czyAgentAktywny = BackgroundLibrary.Init();
+                //dostepDoDaneORuchu = await DaneORuchu.InicjalizujDaneORuchu();
+                //czyAgentAktywny = BackgroundLibrary.Init();
             });
             inicjalizacja.Start();
+            PrzejdzDoStronyGlownej();
             KlasaPomocniczna.mainPageInstance = this;
+            bool czyKonfigurowac = Konfiguracja.CzyPierwszeUruchomienie();
         }
 
         private void btnHamburger_Click(object sender, RoutedEventArgs e)
@@ -65,13 +67,14 @@ namespace MobilnyOpiekun
             }
         }
 
-        public void przejdzDo(string strona, string tytulStrony)
+        public void przejdzDo(string strona, string tytulStrony = "")
         {
-            // Ustawienie tytułu wyświetlanej strony
-            txtTytulStrony.Text = tytulStrony;
             // Załadowanie strony do obiektu Frame
             var stronaDoWyswietlenia = "MobilnyOpiekun.Views." + strona;
             zawartosc.Navigate(Type.GetType(stronaDoWyswietlenia), this);
+
+            // Ustawienie tytułu wyświetlanej strony
+            txtTytulStrony.Text = tytulStrony;
 
             if (HamburgerMenu.IsPaneOpen)
             {
@@ -79,12 +82,12 @@ namespace MobilnyOpiekun
             }
         }
 
-        public void przejdzDoStronyGlownej()
+        public void PrzejdzDoStronyGlownej()
         {
             mnuItem_Tapped(mnuStronaGlowna, new TappedRoutedEventArgs());
         }
 
-        public void przejdzDoUstawien()
+        public void PrzejdzDoUstawien()
         {
             mnuItem_Tapped(mnuUstawienia, new TappedRoutedEventArgs());
         }

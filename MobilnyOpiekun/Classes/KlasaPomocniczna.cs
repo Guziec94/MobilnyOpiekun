@@ -29,5 +29,10 @@ namespace MobilnyOpiekun.Classes
         {
             mainPageInstance.przejdzDo(strona, tytulStrony);
         }
+
+        public static void PrzejdzDoStronyGlownej()
+        {
+            mainPageInstance.PrzejdzDoStronyGlownej();
+        }
     }
 }

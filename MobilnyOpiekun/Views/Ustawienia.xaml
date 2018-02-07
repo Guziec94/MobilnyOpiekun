@@ -9,19 +9,19 @@
     Width="310" Height="590">
 
     <StackPanel>
-        <TextBox x:Name="txtImie" Header="Imię" Text="" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtNazwisko" Header="Nazwisko" Text="" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"/>
-        <TimePicker x:Name="timePoczatek" Header="Orientacyjny początek dnia" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"/>
-        <TimePicker x:Name="timeKoniec" Header="Orientacyjny koniec dnia" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtImie" Header="Imię" Text="" MaxLength="50" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TextChanged="txtImie_TextChanged"/>
+        <TextBox x:Name="txtNazwisko" Header="Nazwisko" Text="" MaxLength="50" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TextChanged="txtNazwisko_TextChanged"/>
+        <TimePicker x:Name="timePoczatek" Header="Orientacyjny początek dnia" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timePoczatek_TimeChanged"/>
+        <TimePicker x:Name="timeKoniec" Header="Orientacyjny koniec dnia" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timeKoniec_TimeChanged"/>
 
-        <TextBlock Text="Osoby, które będą otrzymywać powiadomienia (opiekunowie)" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"/>
+        <TextBlock Text="Osoby, które będą otrzymywać powiadomienia o Twojej aktywności ruchowej - opiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top"/>
         <StackPanel x:Name="stpaOpiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" MinHeight="50" Tapped="stpaOpiekunowie_Tapped">
             
         </StackPanel>
-        
-        <Button x:Name="btnDodajOpiekuna" Content="Dodaj opiekuna" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnDodajOpiekuna_Click"/>
-        <Button x:Name="btnZachowajUstawienia" Content="Zapisz" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Click="btnZachowajUstawienia_Click"/>
-        <Button x:Name="btnOdrzucUstawienia" Content="Odrzuć" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Click="btnOdrzucUstawienia_Click"/>
+
+        <Button x:Name="btnDodajOpiekuna" Content="Dodaj opiekuna" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Click="btnDodajOpiekuna_Click"/>
+        <Button x:Name="btnZachowajUstawienia" Content="Zapisz zmiany" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" Click="btnZachowajUstawienia_Click"/>
+        <Button x:Name="btnOdrzucUstawienia" Content="Odrzuć zmiany" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" Click="btnOdrzucUstawienia_Click"/>
         
     </StackPanel>
 </Page>

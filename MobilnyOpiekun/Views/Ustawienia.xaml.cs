@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MobilnyOpiekun.Classes;
 using System.Linq;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -16,46 +17,41 @@ namespace MobilnyOpiekun.Views
     /// </summary>
     public sealed partial class Ustawienia : Page
     {
-        ApplicationDataContainer localSettings;
-        ApplicationDataCompositeValue composite;
-        MainPage mainPageInstance;
-
         public Ustawienia()
         {
             InitializeComponent();
 
-            localSettings = ApplicationData.Current.LocalSettings;
-
-            // Composite setting
-            composite = (ApplicationDataCompositeValue)localSettings.Values["exampleCompositeSetting"];
-
-            if (composite == null)
+            txtImie.Text = Konfiguracja.imie??"";
+            txtNazwisko.Text = Konfiguracja.nazwisko ?? "";
+            TimeSpan poczatek, koniec;
+            if(TimeSpan.TryParse(Konfiguracja.poczatekAktywnosci, out poczatek))
             {
-                // No data - create empty compositeValue
-                composite = new ApplicationDataCompositeValue();
-            }
-            else
-            {
-                // Access data in composite["intVal"] and composite["strVal"]
-            }
-        }
+                timePoczatek.Time = poczatek;
 
-        // Funkcja przechwytująca parametr przekazany podczas nawigacji pomiędzy stronami.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            mainPageInstance = e.Parameter as MainPage;
+            }
+            if (TimeSpan.TryParse(Konfiguracja.koniecAktywnosci, out koniec))
+            {
+                timeKoniec.Time = koniec;
+
+            }
         }
 
         private void btnOdrzucUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            mainPageInstance.przejdzDoStronyGlownej();
+            //mainPageInstance.przejdzDoStronyGlownej();
+            KlasaPomocniczna.PrzejdzDoStronyGlownej();
         }
 
         private void btnZachowajUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            localSettings.Values["exampleCompositeSetting"] = composite;
-            mainPageInstance.przejdzDoStronyGlownej();
+            if(timePoczatek.Time > timeKoniec.Time)
+            {
+                MessageDialog messageDialog = new MessageDialog("Zakres godzin aktywności w ciągu dnia jest błędny. Popraw godzinę początku i końca dnia, a następnie zapisz zmiany raz jeszcze.");
+                messageDialog.ShowAsync();
+                return;
+            }
+            Konfiguracja.ZapiszKonfiguracje();
+            KlasaPomocniczna.PrzejdzDoStronyGlownej();
         }
 
         private async void btnDodajOpiekuna_Click(object sender, RoutedEventArgs e)
@@ -97,6 +93,26 @@ namespace MobilnyOpiekun.Views
         {
             StackPanel wybranyElement = sender as StackPanel;
             UIElementCollection cos = wybranyElement.Children;
+        }
+
+        private void txtImie_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Konfiguracja.imie = txtImie.Text;
+        }
+
+        private void txtNazwisko_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Konfiguracja.nazwisko = txtNazwisko.Text;
+        }
+
+        private void timePoczatek_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        {
+            Konfiguracja.poczatekAktywnosci = timePoczatek.Time.ToString();
+        }
+
+        private void timeKoniec_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        {
+            Konfiguracja.koniecAktywnosci = timeKoniec.Time.ToString();
         }
     }
 }

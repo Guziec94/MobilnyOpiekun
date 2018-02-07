@@ -98,6 +98,7 @@
     <Compile Include="BackgroundLibrary.cs" />
     <Compile Include="Classes\DaneORuchu.cs" />
     <Compile Include="Classes\KlasaPomocniczna.cs" />
+    <Compile Include="Classes\Konfiguracja.cs" />
     <Compile Include="Classes\Lokalizacja.cs" />
     <Compile Include="Classes\Opiekun.cs" />
     <Compile Include="Classes\WiadomoscSMS.cs" />
