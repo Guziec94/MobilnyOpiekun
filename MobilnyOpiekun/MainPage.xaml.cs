@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MobilnyOpiekun.Classes;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -24,11 +25,22 @@ namespace MobilnyOpiekun
     public sealed partial class MainPage : Page
     {
         bool czyWiadomosciAktywne;
+        bool czyLokalizacjaAktywna;
+        bool czyDaneORuchuAktywne;
+        bool czyAgentAktywny;
         public MainPage()
         {
             InitializeComponent();
             KlasaPomocniczna.PokazPasekStanuAsync();
-            czyWiadomosciAktywne = WiadomoscSMS.InicjalizujSMS();
+            Task inicjalizacja = new Task(async () =>
+            {
+                czyWiadomosciAktywne = WiadomoscSMS.InicjalizujSMS();
+                czyLokalizacjaAktywna = await Lokalizacja.InicjalizujGPS();
+                //Lokalizacja.PobierzLokalizacje();
+                czyDaneORuchuAktywne = await DaneORuchu.InicjalizujDaneORuchu();
+                czyAgentAktywny = BackgroundLibrary.Init();
+            });
+            inicjalizacja.Start();
             KlasaPomocniczna.mainPageInstance = this;
         }
 

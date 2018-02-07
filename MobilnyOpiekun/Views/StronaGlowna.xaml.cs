@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,30 @@ namespace MobilnyOpiekun.Views
     /// </summary>
     public sealed partial class StronaGlowna : Page
     {
+        bool zmianaPodczasLadowania;
         public StronaGlowna()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            if (BackgroundLibrary.IsWorking)
+            {
+                zmianaPodczasLadowania = true;
+                tglBackgroundTask.IsOn = true;
+            }
+            zmianaPodczasLadowania = false;
+        }
+
+        private async void tglBackgroundTask_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (!zmianaPodczasLadowania)
+            {
+                bool poprzedniStan = BackgroundLibrary.IsWorking;
+                bool aktualnyStan = await BackgroundLibrary.Toggle();
+                if(poprzedniStan == aktualnyStan)
+                {
+                    var dialog = new MessageDialog("Coś poszło nie tak, agent nie został poprawnie " + (poprzedniStan ? "wyłączony." : "włączony."));
+                    await dialog.ShowAsync();
+                }
+            }
         }
     }
 }
