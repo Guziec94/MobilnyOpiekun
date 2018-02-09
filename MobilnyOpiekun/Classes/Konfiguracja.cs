@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace MobilnyOpiekun.Classes
@@ -16,17 +13,12 @@ namespace MobilnyOpiekun.Classes
         public static string koniecAktywnosci;
         public static List<Opiekun> opiekunowie;
 
-        static string[] parametryDoSkonfigurowania = { "imie", "nazwisko", "poczatekAktywnosci", "koniecAktywnosci", "opiekunowie" };
+        static string[] parametryDoSkonfigurowania = { "imie", "nazwisko", "poczatekAktywnosci", "koniecAktywnosci" };
 
         public static bool CzyPierwszeUruchomienie()
         {
             if (ApplicationData.Current.LocalSettings.Values.Keys.Any())
             {
-                //imie = "Tomasz";
-                //nazwisko = "Braczynski";
-                //poczatekAktywnosci = "08:00:00";
-                //koniecAktywnosci = "20:00:00";
-                //ZapiszKonfiguracje();
                 WczytajKonfiguracje();
                 return false;
             }
@@ -36,12 +28,11 @@ namespace MobilnyOpiekun.Classes
 
         public static void WstepnieSkonfiguruj()
         {
-            ApplicationDataCompositeValue applicationDataCompositeValue = new ApplicationDataCompositeValue();
             foreach(string parametr in parametryDoSkonfigurowania)
             {
-                applicationDataCompositeValue.Add(parametr, null);
+                typeof(Konfiguracja).GetField(parametr).SetValue(parametr, null);
             }
-            ApplicationData.Current.LocalSettings.Values["konfiguracja"] = applicationDataCompositeValue;
+            opiekunowie = new List<Opiekun>();
         }
 
         public static void WczytajKonfiguracje()
@@ -49,7 +40,14 @@ namespace MobilnyOpiekun.Classes
             ApplicationDataCompositeValue odczytaneParametry = (ApplicationDataCompositeValue)ApplicationData.Current.LocalSettings.Values["konfiguracja"];
             foreach (string parametr in odczytaneParametry.Keys)
             {
-                typeof(Konfiguracja).GetField(parametr).SetValue(parametr, odczytaneParametry[parametr]);
+                if (parametr == "opiekunowie")
+                {
+                    opiekunowie = KlasaPomocniczna.StringToOpiekunowie(odczytaneParametry["opiekunowie"] as string);
+                }
+                else
+                {
+                    typeof(Konfiguracja).GetField(parametr).SetValue(parametr, odczytaneParametry[parametr]);
+                }
             }
         }
 
@@ -61,6 +59,7 @@ namespace MobilnyOpiekun.Classes
                 var wartosc = typeof(Konfiguracja).GetField(parametr).GetValue(parametr);
                 applicationDataCompositeValue.Add(parametr, wartosc);
             }
+            applicationDataCompositeValue["opiekunowie"] = KlasaPomocniczna.OpiekunowieToString(opiekunowie);
             ApplicationData.Current.LocalSettings.Values["konfiguracja"] = applicationDataCompositeValue;
         }
     }

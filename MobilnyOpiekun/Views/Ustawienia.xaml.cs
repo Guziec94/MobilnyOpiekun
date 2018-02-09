@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using MobilnyOpiekun.Classes;
-using System.Linq;
 using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -27,18 +24,16 @@ namespace MobilnyOpiekun.Views
             if(TimeSpan.TryParse(Konfiguracja.poczatekAktywnosci, out poczatek))
             {
                 timePoczatek.Time = poczatek;
-
             }
             if (TimeSpan.TryParse(Konfiguracja.koniecAktywnosci, out koniec))
             {
                 timeKoniec.Time = koniec;
-
             }
+            ZaladujListeOpiekunow();
         }
 
         private void btnOdrzucUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            //mainPageInstance.przejdzDoStronyGlownej();
             KlasaPomocniczna.PrzejdzDoStronyGlownej();
         }
 
@@ -60,7 +55,20 @@ namespace MobilnyOpiekun.Views
             if (await cD.ShowAsync() == ContentDialogResult.Primary)
             {
                 Opiekun doDodania = cD.utworzonyOpiekun;
-                stpaOpiekunowie.Children.Add(doDodania.GenerujStackPanel());
+                Konfiguracja.opiekunowie.Add(doDodania);
+                stpaOpiekunowie.Children.Clear();
+                ZaladujListeOpiekunow();
+            }
+        }
+
+        private void ZaladujListeOpiekunow()
+        {
+            if (Konfiguracja.opiekunowie != null)
+            {
+                foreach (Opiekun opiekun in Konfiguracja.opiekunowie)
+                {
+                    stpaOpiekunowie.Children.Add(opiekun.GenerujStackPanel());
+                }
             }
         }
 

@@ -1,13 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 
 namespace MobilnyOpiekun.Classes
 {
@@ -33,6 +25,30 @@ namespace MobilnyOpiekun.Classes
         public static void PrzejdzDoStronyGlownej()
         {
             mainPageInstance.PrzejdzDoStronyGlownej();
+        }
+
+        public static string OpiekunowieToString(List<Opiekun> opiekunowie)
+        {
+            string wyjscie = "";
+            foreach (Opiekun opiekun in opiekunowie)
+            {
+                wyjscie += opiekun.OpiekunToString() + (char)0;
+            }
+            return wyjscie;
+        }
+
+        public static List<Opiekun> StringToOpiekunowie(string opiekunowieString)
+        {
+            List<Opiekun> wyjscie = new List<Opiekun>();
+            var opiekunowieDoDeserializacji = opiekunowieString.Split((char)0);
+            foreach (string opiekunDoDeserializacji in opiekunowieDoDeserializacji)
+            {
+                if (opiekunDoDeserializacji != "")
+                {
+                    wyjscie.Add(new Opiekun(opiekunDoDeserializacji));
+                }
+            }
+            return wyjscie;
         }
     }
 }
