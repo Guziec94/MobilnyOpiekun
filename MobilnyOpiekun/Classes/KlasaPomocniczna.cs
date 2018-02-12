@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Windows.ApplicationModel;
 
 namespace MobilnyOpiekun.Classes
 {
@@ -35,6 +37,12 @@ namespace MobilnyOpiekun.Classes
                 wyjscie += opiekun.OpiekunToString() + (char)0;
             }
             return wyjscie;
+        }
+
+        public static string PobierzWersjeAplikacji()
+        {
+            Version version = typeof(App).GetTypeInfo().Assembly.GetName().Version;
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
         public static List<Opiekun> StringToOpiekunowie(string opiekunowieString)

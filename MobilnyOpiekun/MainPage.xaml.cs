@@ -34,11 +34,17 @@ namespace MobilnyOpiekun
             KlasaPomocniczna.PokazPasekStanuAsync();
             Task inicjalizacja = new Task(async () =>
             {
-                //dostepDoWiadomosci = WiadomoscSMS.InicjalizujSMS();
-                //dostepDoLokalizacja = await Lokalizacja.InicjalizujGPS();
+                dostepDoWiadomosci = WiadomoscSMS.InicjalizujSMS();
+                dostepDoLokalizacja = await Lokalizacja.InicjalizujGPS();
                 //Lokalizacja.PobierzLokalizacje();
-                //dostepDoDaneORuchu = await DaneORuchu.InicjalizujDaneORuchu();
-                //czyAgentAktywny = BackgroundLibrary.Init();
+                dostepDoDaneORuchu = await DaneORuchu.InicjalizujDaneORuchu();
+                czyAgentAktywny = BackgroundLibrary.Init();
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                () =>
+                    {
+                        OszczedzanieEnergii.SprawdzOszczedzanieEnergii();
+                    }
+                );
             });
             inicjalizacja.Start();
             PrzejdzDoStronyGlownej();

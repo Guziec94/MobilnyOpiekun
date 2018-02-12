@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities" IgnorableNamespaces="uap mp rescap">
-  <Identity Name="MobilnyOpiekun" Publisher="CN=tomek" Version="1.0.0.0" />
+  <Identity Name="MobilnyOpiekun" Publisher="CN=Guziec94" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="7272111c-2de0-4978-be78-0f6176f3c1fe" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MobilnyOpiekun</DisplayName>
