@@ -5,12 +5,33 @@
     xmlns:local="using:MobilnyOpiekun.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Margin="5">
+    mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="MobilnyOpiekun" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,50,0,10" FontSize="40"/>
-        <TextBlock x:Name="txtWersjaAplikacji" Text="v1.0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,0,25"/>
-        <ToggleSwitch x:Name="tglBackgroundTask" Header="Status agenta" Toggled="tglBackgroundTask_Toggled"/>
+        <StackPanel x:Name="spLogo" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,20">
+            <TextBlock 
+                Text="Mobilny" 
+                FontSize="40" Foreground="{StaticResource Niebieski}"/>
+            <TextBlock 
+                Text="Opiekun"
+                FontSize="40" Foreground="{StaticResource Pomaranczowy}"/>
+        </StackPanel>
+        <TextBlock x:Name="txtWersjaAplikacji" 
+            Text="v1.0" 
+            VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+        <TextBlock 
+            Text="Uruchomienie agenta może wiązać się z samoczynnym wysyłaniem wiadomości SMS, za które mogą być naliczone opłaty (koszt wiadomości według stawek operatora). Więcej informacji na ten temat jest dostępnych w sekcji 'Pomoc'." 
+            Foreground="OrangeRed" TextAlignment="Center" Margin="10"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock 
+                Text="Status agenta"
+                Margin="0" VerticalAlignment="Center"/>
+            <ToggleSwitch x:Name="tglBackgroundTask"
+                Toggled="tglBackgroundTask_Toggled" VerticalAlignment="Center" Margin="5"/>
+        </StackPanel>
+        <TextBlock x:Name="txtBledy"
+            Text="Agent nie może zostać uruchomiony z powodu napotkanych błedów. Przejdź do sekcji 'Ustawienia' by poprawnie skonfigurować aplikację."
+            Foreground="Red" Margin="5" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" TextAlignment="Center" Visibility="Collapsed"/>
     </StackPanel>
 </Page>

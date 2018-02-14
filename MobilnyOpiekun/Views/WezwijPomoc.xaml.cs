@@ -28,11 +28,12 @@ namespace MobilnyOpiekun.Views
             this.InitializeComponent();
             if (!WiadomoscSMS.czyZainicjalizowane)
             {
-                nazwaAsync();
+                scrlZawartosc.Visibility = Visibility.Collapsed;
+                ZablokujZawartosc();
             }
         }
 
-        async void nazwaAsync()
+        async void ZablokujZawartosc()
         {
             ContentDialog md = new ContentDialog();
             md.Title = "Funkcja wzywania pomocy jest niedostępna";

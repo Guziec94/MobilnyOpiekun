@@ -51,18 +51,25 @@ namespace MobilnyOpiekun
             }
             else
             {
-                try
+                if (Classes.Konfiguracja.CzyKonfiguracjaPoprawna() && Classes.Konfiguracja.CzyPrzyznanoWszystkieDostepy())
                 {
-                    await BackgroundExecutionManager.RequestAccessAsync();
-                    BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
-                    builder.Name = typeof(Background.MojTrigger).FullName;
-                    builder.SetTrigger(new TimeTrigger(15, false));
-                    builder.TaskEntryPoint = builder.Name;
-                    builder.Register();
-                    registration = BackgroundTaskRegistration.AllTasks.Values.First();
-                    return true;
+                    try
+                    {
+                        await BackgroundExecutionManager.RequestAccessAsync();
+                        BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
+                        builder.Name = typeof(Background.MojTrigger).FullName;
+                        builder.SetTrigger(new TimeTrigger(15, false));
+                        builder.TaskEntryPoint = builder.Name;
+                        builder.Register();
+                        registration = BackgroundTaskRegistration.AllTasks.Values.First();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
                     return false;
                 }

@@ -39,18 +39,25 @@ namespace MobilnyOpiekun.Views
 
         private void btnZachowajUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            if(timePoczatek.Time > timeKoniec.Time)
+            if (Konfiguracja.CzyKonfiguracjaPoprawna())
             {
-                MessageDialog messageDialog = new MessageDialog("Zakres godzin aktywności w ciągu dnia jest błędny. Popraw godzinę początku i końca dnia, a następnie zapisz zmiany raz jeszcze.");
-                messageDialog.ShowAsync();
-                return;
+                Konfiguracja.ZapiszKonfiguracje();
+                KlasaPomocniczna.PrzejdzDoStronyGlownej();
             }
-            Konfiguracja.ZapiszKonfiguracje();
-            KlasaPomocniczna.PrzejdzDoStronyGlownej();
+            else
+            {
+                txtBladOgolny.Visibility = Visibility.Visible;
+            }
         }
 
         private async void btnDodajOpiekuna_Click(object sender, RoutedEventArgs e)
         {
+            if (Konfiguracja.opiekunowie.Count == 5)
+            {
+                MessageDialog messageDialog = new MessageDialog("Nie można dodać więcej niż 5 opiekunów.");
+                messageDialog.ShowAsync();
+                return;
+            }
             DodajOpiekuna cD = new DodajOpiekuna();
             if (await cD.ShowAsync() == ContentDialogResult.Primary)
             {
@@ -106,21 +113,39 @@ namespace MobilnyOpiekun.Views
         private void txtImie_TextChanged(object sender, TextChangedEventArgs e)
         {
             Konfiguracja.imie = txtImie.Text;
+            txtImieBlad.Visibility = Konfiguracja.imie == "" ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void txtNazwisko_TextChanged(object sender, TextChangedEventArgs e)
         {
             Konfiguracja.nazwisko = txtNazwisko.Text;
+            txtNazwiskoBlad.Visibility = Konfiguracja.nazwisko == "" ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void timePoczatek_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
         {
             Konfiguracja.poczatekAktywnosci = timePoczatek.Time.ToString();
+            if(timePoczatek.Time < timeKoniec.Time)
+            {
+                txtTimeBlad.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtTimeBlad.Visibility = Visibility.Visible;
+            }
         }
 
         private void timeKoniec_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
         {
             Konfiguracja.koniecAktywnosci = timeKoniec.Time.ToString();
+            if (timePoczatek.Time < timeKoniec.Time)
+            {
+                txtTimeBlad.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtTimeBlad.Visibility = Visibility.Visible;
+            }
         }
     }
 }

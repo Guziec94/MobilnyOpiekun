@@ -46,8 +46,12 @@ namespace MobilnyOpiekun.Views
                 bool aktualnyStan = await BackgroundLibrary.Toggle();
                 if(poprzedniStan == aktualnyStan)
                 {
-                    var dialog = new MessageDialog("Coś poszło nie tak, agent nie został poprawnie " + (poprzedniStan ? "wyłączony." : "włączony."));
+                    MessageDialog dialog = new MessageDialog("Coś poszło nie tak, agent nie został poprawnie " + (poprzedniStan ? "wyłączony." : "włączony."));
                     await dialog.ShowAsync();
+                    txtBledy.Visibility = Visibility.Visible;
+                    tglBackgroundTask.Toggled -= tglBackgroundTask_Toggled;
+                    tglBackgroundTask.IsOn = false;
+                    tglBackgroundTask.Toggled += tglBackgroundTask_Toggled;
                 }
             }
         }

@@ -11,5 +11,16 @@
         <RelativePanel x:Name="maskaBlokujaca" Visibility="Collapsed" Opacity=".5" Background="Gray">
             <TextBlock Text="Funkcja niedostępna, więcej informacji znajdziesz na stronie Pomoc." Foreground="Red" FontSize="40" FontWeight="Bold" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
         </RelativePanel>
+        <ScrollViewer x:Name="scrlZawartosc">
+            <StackPanel>
+                <TextBlock 
+                    Text="Aby wezwać pomoc wybierz jednego lub kilku opiekunów (klikając na niego). Następnie kliknij przycisk 'Wezwij pomoc', a zostanie wysłana do niego wiadomość SMS z prośbą o pomoc."
+                    Margin="5"/>
+                <StackPanel x:Name="stpaOpiekunowie">
+                    
+                </StackPanel>
+                
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

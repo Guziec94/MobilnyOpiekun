@@ -41,6 +41,11 @@ namespace MobilnyOpiekun.Views
                 txtBledy.Text += "\nWprowadź numer telefonu ręcznie lub poprzez naciśnięcie przycisku z ikoną kontaktu.";
                 czySaBledy = true;
             }
+            if(Konfiguracja.opiekunowie.Any(x=>x.numerTelefonu == numerTelefonu))
+            {
+                txtBledy.Text += "\nOpiekun o takim numerze telefonu już istnieje.";
+                czySaBledy = true;
+            }
             if (czySaBledy)
             {
                 args.Cancel = true;
@@ -48,7 +53,7 @@ namespace MobilnyOpiekun.Views
             }
             else
             {
-                utworzonyOpiekun = new Classes.Opiekun(nazwaKontaktu, numerTelefonu);
+                utworzonyOpiekun = new Opiekun(nazwaKontaktu, numerTelefonu);
             }
         }
 
