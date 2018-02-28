@@ -27,11 +27,11 @@ namespace MobilnyOpiekun.Classes
                 StackPanel stackPanel = new StackPanel();
                 TextBlock informacja = new TextBlock()
                 {
-                    Text = "Oszczędzanie energii jest włączone co może spowodować niepoprawne działanie aplikacji. Kliknij przycisk \"Otwórz ustawienia\", a następnie otwórz sekcję \"Użycie baterii przez aplikację\". Odnajdź aplikację MobilnyOpiekun, kliknij na nią i wybierz \"Zawsze dozwolone w tle\"."
+                    Text = "Oszczędzanie energii jest włączone co może spowodować niepoprawne działanie aplikacji. Kliknij przycisk \"Otwórz ustawienia\", a następnie przejdź do \"Użycie baterii przez aplikację\". Na liście odnajdź wpis \"MobilnyOpiekun\", kliknij na niego i wybierz \"Zawsze dozwolone w tle\"."
                 };
                 CheckBox czyIgnorowac = new CheckBox()
                 {
-                    Content = "Zawsze ignoruj ten problem",
+                    Content = "Nie pokazuj tego okna nigdy więcej",
                     Name = "czyIgnorowac",
                     IsChecked = false
                 };

@@ -1,28 +1,36 @@
-﻿using System;
+﻿using MobilnyOpiekun.Classes;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Contacts;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using MobilnyOpiekun.Classes;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MobilnyOpiekun.Views
 {
-    public sealed partial class DodajOpiekuna : ContentDialog
+    public sealed partial class EdycjaOpiekuna : ContentDialog
     {
-        public Opiekun utworzonyOpiekun;
-        public DodajOpiekuna()
-        {
-            InitializeComponent();
-        }
-
-        public DodajOpiekuna(Opiekun modyfikowany)
+        public Opiekun zmodyfikowanyOpiekun;
+        private Guid guid;
+        public EdycjaOpiekuna(Opiekun modyfikowany)
         {
             InitializeComponent();
             PrimaryButtonText = "Zapisz zmiany";
-            SecondaryButtonText = "Usuń opiekuna";
+            SecondaryButtonText = "Odrzuć zmiany";
             txtNazwaOpiekuna.Text = modyfikowany.nazwa;
             txtNumerTelefonu.Text = modyfikowany.numerTelefonu;
+            guid = modyfikowany.guid;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -36,16 +44,12 @@ namespace MobilnyOpiekun.Views
                 txtBledy.Text += "\nNazwa kontaktu nie może być pusta.";
                 czySaBledy = true;
             }
-            if (numerTelefonu.Length == 0) 
+            if (numerTelefonu.Length == 0)
             {
                 txtBledy.Text += "\nWprowadź numer telefonu ręcznie lub poprzez naciśnięcie przycisku z ikoną kontaktu.";
                 czySaBledy = true;
             }
-            if(Konfiguracja.opiekunowie.Any(x=>x.numerTelefonu == numerTelefonu))
-            {
-                txtBledy.Text += "\nOpiekun o takim numerze telefonu już istnieje.";
-                czySaBledy = true;
-            }
+            // Podczas edycji nie jest sprawdzana unikalność numeru
             if (czySaBledy)
             {
                 args.Cancel = true;
@@ -53,13 +57,12 @@ namespace MobilnyOpiekun.Views
             }
             else
             {
-                utworzonyOpiekun = new Opiekun(nazwaKontaktu, numerTelefonu);
+                zmodyfikowanyOpiekun = new Opiekun(nazwaKontaktu, numerTelefonu, guid);
             }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-
         }
 
         private async void btnWybierzKontakt_ClickAsync(object sender, RoutedEventArgs e)

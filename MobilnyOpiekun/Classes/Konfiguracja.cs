@@ -31,14 +31,14 @@ namespace MobilnyOpiekun.Classes
         {
             foreach(string parametr in przechowywaneParametry)
             {
-                typeof(Konfiguracja).GetField(parametr).SetValue(parametr, null);
+                typeof(Konfiguracja).GetField(parametr).SetValue(parametr, "");
             }
             opiekunowie = new List<Opiekun>();
         }
 
         public static void WczytajKonfiguracje()
         {
-            ApplicationDataCompositeValue odczytaneParametry = (ApplicationDataCompositeValue)ApplicationData.Current.LocalSettings.Values["konfiguracja"];
+            ApplicationDataCompositeValue odczytaneParametry = (ApplicationDataCompositeValue)ApplicationData.Current.LocalSettings.Values["konfiguracja"]?? new ApplicationDataCompositeValue();
             foreach (string parametr in odczytaneParametry.Keys)
             {
                 if (parametr == "opiekunowie")
@@ -60,7 +60,7 @@ namespace MobilnyOpiekun.Classes
                 var wartosc = typeof(Konfiguracja).GetField(parametr).GetValue(parametr);
                 applicationDataCompositeValue.Add(parametr, wartosc);
             }
-            applicationDataCompositeValue["opiekunowie"] = KlasaPomocniczna.OpiekunowieToString(opiekunowie);
+            applicationDataCompositeValue.Add("opiekunowie", KlasaPomocniczna.OpiekunowieToString(opiekunowie));
             ApplicationData.Current.LocalSettings.Values["konfiguracja"] = applicationDataCompositeValue;
         }
 

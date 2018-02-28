@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MobilnyOpiekun.Classes;
 using System.Threading.Tasks;
+using Windows.UI.ViewManagement;
+using Windows.UI.Popups;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,7 +34,12 @@ namespace MobilnyOpiekun
         public MainPage()
         {
             InitializeComponent();
+
+            ApplicationView.GetForCurrentView().VisibleBoundsChanged += MainPage_VisibleBoundsChanged;
+            MainPage_VisibleBoundsChanged(null, null);
+
             KlasaPomocniczna.PokazPasekStanuAsync();
+
             Task inicjalizacja = new Task(async () =>
             {
                 dostepDoWiadomosci = WiadomoscSMS.InicjalizujSMS();
@@ -47,9 +55,26 @@ namespace MobilnyOpiekun
                 );
             });
             inicjalizacja.Start();
-            PrzejdzDoStronyGlownej();
-            KlasaPomocniczna.mainPageInstance = this;
             bool czyKonfigurowac = Konfiguracja.CzyPierwszeUruchomienie();
+
+            PrzejdzDoStronyGlownej();
+
+            KlasaPomocniczna.mainPageInstance = this;
+        }
+
+        /// <summary>
+        /// W zależności od wysokości okna ustawia wysokość Frame'a. Wywoływane podczas zmiany wymiarów wyświetlanego widoku, np. podczas ukrycia programowego paska nawigacji.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void MainPage_VisibleBoundsChanged(ApplicationView sender, object args)
+        {
+            zawartosc.Height = ApplicationView.GetForCurrentView().VisibleBounds.Height - 50;
+            if (zawartosc.Height > this.Height - 50) 
+            {
+                // Frame (zawartosc) nie może być większy niż otaczające go elementy
+                zawartosc.Height = this.Height - 50;
+            }
         }
 
         private void btnHamburger_Click(object sender, RoutedEventArgs e)
@@ -96,6 +121,18 @@ namespace MobilnyOpiekun
         public void PrzejdzDoUstawien()
         {
             mnuItem_Tapped(mnuUstawienia, new TappedRoutedEventArgs());
+        }
+
+        private async void zawartosc_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (zawartosc.Content != null)
+            {
+                string stronaPrzedPrzejsciem = (zawartosc.Content as Page).BaseUri.Segments[2].Split('.')[0];
+                if(stronaPrzedPrzejsciem == "Ustawienia")
+                {
+                    (zawartosc.Content as Views.Ustawienia).ZatrzymajOdswiezanie();
+                }
+            }
         }
     }
 }

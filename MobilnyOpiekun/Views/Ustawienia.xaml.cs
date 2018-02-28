@@ -4,6 +4,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MobilnyOpiekun.Classes;
 using Windows.UI.Popups;
+using Windows.UI.Core;
+using System.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -14,9 +16,14 @@ namespace MobilnyOpiekun.Views
     /// </summary>
     public sealed partial class Ustawienia : Page
     {
+        Task odswiezanieListyOpiekunow;
+        bool czyodswiezanieListyOpiekunowAktywne = true;
         public Ustawienia()
         {
             InitializeComponent();
+
+            #region ładowanie konfiguracji i wypełnianie pól danymi
+            Konfiguracja.WczytajKonfiguracje();
 
             txtImie.Text = Konfiguracja.imie??"";
             txtNazwisko.Text = Konfiguracja.nazwisko ?? "";
@@ -29,7 +36,40 @@ namespace MobilnyOpiekun.Views
             {
                 timeKoniec.Time = koniec;
             }
-            ZaladujListeOpiekunow();
+            #endregion
+
+            #region odswiezanie listy opiekunow
+            KlasaPomocniczna.odswiezListeOpiekunow = new System.Threading.AutoResetEvent(false);
+            odswiezanieListyOpiekunow = new Task(async () => 
+            {
+                while (czyodswiezanieListyOpiekunowAktywne)
+                {
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        ZaladujListeOpiekunow();
+                    });
+                    KlasaPomocniczna.odswiezListeOpiekunow.WaitOne();
+                }
+            });
+            odswiezanieListyOpiekunow.Start();
+            #endregion
+
+            #region uruchomienie funkcji walidujących
+            txtImie_TextChanged(null, null);
+            txtNazwisko_TextChanged(null, null);
+            timePoczatek_TimeChanged(null, null);
+            timeKoniec_TimeChanged(null, null);
+            #endregion
+        }
+
+        public void ZatrzymajOdswiezanie()
+        {
+            try
+            {
+                czyodswiezanieListyOpiekunowAktywne = false;
+                KlasaPomocniczna.odswiezListeOpiekunow.Set();
+            }
+            catch { }
         }
 
         private void btnOdrzucUstawienia_Click(object sender, RoutedEventArgs e)
@@ -58,56 +98,25 @@ namespace MobilnyOpiekun.Views
                 messageDialog.ShowAsync();
                 return;
             }
-            DodajOpiekuna cD = new DodajOpiekuna();
+            DodawanieOpiekuna cD = new DodawanieOpiekuna();
             if (await cD.ShowAsync() == ContentDialogResult.Primary)
             {
                 Opiekun doDodania = cD.utworzonyOpiekun;
                 Konfiguracja.opiekunowie.Add(doDodania);
-                stpaOpiekunowie.Children.Clear();
                 ZaladujListeOpiekunow();
             }
         }
 
         private void ZaladujListeOpiekunow()
         {
+            stpaOpiekunowie.Children.Clear();
             if (Konfiguracja.opiekunowie != null)
             {
                 foreach (Opiekun opiekun in Konfiguracja.opiekunowie)
                 {
-                    stpaOpiekunowie.Children.Add(opiekun.GenerujStackPanel());
+                    stpaOpiekunowie.Children.Add(opiekun.GenerujStackPanelDoEdycji());
                 }
             }
-        }
-
-        private async Task<string> InputTextDialogAsync(string tytul, string btnZatwierdz, bool dwaPrzyciski = false, string btnOdrzuc = "Odrzuć")
-        {
-            TextBox inputTextBox = new TextBox
-            {
-                AcceptsReturn = false,
-                Height = 32
-            };
-            ContentDialog dialog = new ContentDialog
-            {
-                Content = inputTextBox,
-                Title = tytul,
-                IsSecondaryButtonEnabled = dwaPrzyciski,
-                PrimaryButtonText = btnZatwierdz,
-                SecondaryButtonText = btnOdrzuc,
-            };
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-            {
-                return inputTextBox.Text;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        private void stpaOpiekunowie_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            StackPanel wybranyElement = sender as StackPanel;
-            UIElementCollection cos = wybranyElement.Children;
         }
 
         private void txtImie_TextChanged(object sender, TextChangedEventArgs e)
@@ -145,6 +154,18 @@ namespace MobilnyOpiekun.Views
             else
             {
                 txtTimeBlad.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void stpaOpiekunowie_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (Konfiguracja.opiekunowie.Any())
+            {
+                txtOpiekunowieBlad.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtOpiekunowieBlad.Visibility = Visibility.Visible;
             }
         }
     }

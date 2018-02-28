@@ -5,10 +5,9 @@
     xmlns:local="using:MobilnyOpiekun.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Width="310" Height="590">
+    mc:Ignorable="d">
 
-    <ScrollViewer>
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel ScrollViewer.HorizontalScrollMode="Auto">
             <TextBox x:Name="txtImie" Header="Imię" Text="" MaxLength="50" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TextChanged="txtImie_TextChanged"/>
             <TextBlock x:Name="txtImieBlad"
@@ -28,13 +27,13 @@
 
 
             <TextBlock Text="Osoby, które będą otrzymywać powiadomienia o Twojej aktywności ruchowej - opiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top"/>
-            <StackPanel x:Name="stpaOpiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" MinHeight="50" Tapped="stpaOpiekunowie_Tapped">
+            <StackPanel x:Name="stpaOpiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" MinHeight="25" SizeChanged="stpaOpiekunowie_SizeChanged">
             
             </StackPanel>
-            <Button x:Name="btnDodajOpiekuna" Content="Dodaj opiekuna" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Click="btnDodajOpiekuna_Click"/>
             <TextBlock x:Name="txtOpiekunowieBlad"
                 Text="Co najmniej jeden opiekun jest wymagany."
                 Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
+            <Button x:Name="btnDodajOpiekuna" Content="Dodaj opiekuna" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Click="btnDodajOpiekuna_Click"/>
 
 
             <TextBlock

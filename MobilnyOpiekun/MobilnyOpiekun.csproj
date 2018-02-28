@@ -107,8 +107,11 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DodajOpiekuna.xaml.cs">
-      <DependentUpon>DodajOpiekuna.xaml</DependentUpon>
+    <Compile Include="Views\DodawanieOpiekuna.xaml.cs">
+      <DependentUpon>DodawanieOpiekuna.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdycjaOpiekuna.xaml.cs">
+      <DependentUpon>EdycjaOpiekuna.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pomoc.xaml.cs">
       <DependentUpon>Pomoc.xaml</DependentUpon>
@@ -196,7 +199,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DodajOpiekuna.xaml">
+    <Page Include="Views\DodawanieOpiekuna.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EdycjaOpiekuna.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

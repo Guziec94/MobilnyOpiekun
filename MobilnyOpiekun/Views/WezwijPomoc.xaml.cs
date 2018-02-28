@@ -31,6 +31,13 @@ namespace MobilnyOpiekun.Views
                 scrlZawartosc.Visibility = Visibility.Collapsed;
                 ZablokujZawartosc();
             }
+            else
+            {
+                foreach (Opiekun opiekun in Konfiguracja.opiekunowie)
+                {
+                    stpaOpiekunowie.Children.Add(opiekun.GenerujStackPanelDoWyboru());
+                }
+            }
         }
 
         async void ZablokujZawartosc()

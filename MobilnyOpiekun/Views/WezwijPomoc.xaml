@@ -16,10 +16,14 @@
                 <TextBlock 
                     Text="Aby wezwać pomoc wybierz jednego lub kilku opiekunów (klikając na niego). Następnie kliknij przycisk 'Wezwij pomoc', a zostanie wysłana do niego wiadomość SMS z prośbą o pomoc."
                     Margin="5"/>
-                <StackPanel x:Name="stpaOpiekunowie">
+                <StackPanel x:Name="stpaOpiekunowie"
+                    ScrollViewer.HorizontalScrollMode="Auto" Margin="5" MinHeight="350" MaxHeight="350">
                     
                 </StackPanel>
-                
+                <Button x:Name="btnWezwijPomoc"
+                    Content="Wezwij pomoc"
+                    Margin="5" HorizontalAlignment="Center"
+                />
             </StackPanel>
         </ScrollViewer>
     </Grid>

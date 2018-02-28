@@ -6,8 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Background="{StaticResource UserAccentColor}"
-    Height="640"
-    Width="360">
+    Width="360"
+    Height="640">
+    <!-- status bar height: 24px -->
+    <!-- navigation bar height: 24px -->
 
     <SplitView x:Name="HamburgerMenu"
         IsPaneOpen="False" 
@@ -91,7 +93,8 @@
                         VerticalAlignment="Center"
                         Foreground="{StaticResource Niebieski}"/>
                 </Border>
-                <Frame x:Name="zawartosc" Height="590" Width="310"/>
+                <Frame x:Name="zawartosc" Height="518" Width="310" Navigating="zawartosc_Navigating"/>
+                <!-- 518 = 640 - 24 (status bar) - 48 (nav bar) - 50 (txtTytulStrony) -->
             </StackPanel>
         </SplitView.Content>
     </SplitView>

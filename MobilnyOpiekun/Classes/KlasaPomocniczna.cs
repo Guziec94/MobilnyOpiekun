@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.UI.Xaml.Controls;
 
 namespace MobilnyOpiekun.Classes
 {
     public static class KlasaPomocniczna
     {
         public static MainPage mainPageInstance;
+        public static AutoResetEvent odswiezListeOpiekunow;
 
         public static async void PokazPasekStanuAsync()
         {

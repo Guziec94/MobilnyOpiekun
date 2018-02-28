@@ -42,6 +42,7 @@ namespace MobilnyOpiekun.Views
         {
             if (!zmianaPodczasLadowania)
             {
+                Konfiguracja.WczytajKonfiguracje();
                 bool poprzedniStan = BackgroundLibrary.IsWorking;
                 bool aktualnyStan = await BackgroundLibrary.Toggle();
                 if(poprzedniStan == aktualnyStan)
