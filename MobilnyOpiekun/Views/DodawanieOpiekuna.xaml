@@ -36,7 +36,8 @@
                 Header="Numer telefonu"
                 Margin="0,0,5,0"
                 Grid.Column="0"
-                MaxLength="25"/>
+                MaxLength="25"
+                InputScope="TelephoneNumber"/>
             <Button x:Name="btnWybierzKontakt"
                 Content="&#xE77B;"
                 FontFamily="Segoe MDL2 Assets"

@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls;
 
 namespace MobilnyOpiekun.Classes
@@ -12,6 +13,8 @@ namespace MobilnyOpiekun.Classes
     {
         public static MainPage mainPageInstance;
         public static AutoResetEvent odswiezListeOpiekunow;
+        public static List<Opiekun> opiekunowieWybraniDoPomocy;
+        public static Geoposition aktualnaPozycja;
 
         public static async void PokazPasekStanuAsync()
         {

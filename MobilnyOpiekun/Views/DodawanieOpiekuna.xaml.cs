@@ -4,6 +4,8 @@ using Windows.ApplicationModel.Contacts;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MobilnyOpiekun.Classes;
+using Windows.System;
+using System.Collections.Generic;
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MobilnyOpiekun.Views
@@ -45,6 +47,7 @@ namespace MobilnyOpiekun.Views
             }
             else
             {
+                numerTelefonu = numerTelefonu.Replace(" ", "");
                 utworzonyOpiekun = new Opiekun(nazwaKontaktu, numerTelefonu);
             }
         }

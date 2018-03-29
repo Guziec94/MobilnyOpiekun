@@ -13,8 +13,9 @@ namespace MobilnyOpiekun.Classes
         public static string poczatekAktywnosci;
         public static string koniecAktywnosci;
         public static List<Opiekun> opiekunowie;
+        public static string maksymalnyCzasOczekiwaniaGps;
 
-        static string[] przechowywaneParametry = { "imie", "nazwisko", "poczatekAktywnosci", "koniecAktywnosci" };
+        static string[] przechowywaneParametry = { "imie", "nazwisko", "poczatekAktywnosci", "koniecAktywnosci", "maksymalnyCzasOczekiwaniaGps" };
 
         public static bool CzyPierwszeUruchomienie()
         {
@@ -34,6 +35,7 @@ namespace MobilnyOpiekun.Classes
                 typeof(Konfiguracja).GetField(parametr).SetValue(parametr, "");
             }
             opiekunowie = new List<Opiekun>();
+            maksymalnyCzasOczekiwaniaGps = 30.ToString();
         }
 
         public static void WczytajKonfiguracje()
@@ -78,6 +80,10 @@ namespace MobilnyOpiekun.Classes
             {
                 return false;
             }
+            if (int.Parse(maksymalnyCzasOczekiwaniaGps) <= 0 || int.Parse(maksymalnyCzasOczekiwaniaGps) > 100)
+            {
+                return false;
+            }
             return true;
         }
 
@@ -100,11 +106,19 @@ namespace MobilnyOpiekun.Classes
             {
                 wyjscie += "Co najmniej jeden opiekun jest wymagany.";
             }
+            if(int.Parse(maksymalnyCzasOczekiwaniaGps) < 0 || int.Parse(maksymalnyCzasOczekiwaniaGps) > 100)
+            {
+                wyjscie += "Maksymalny czas oczekiwania na pobranie lokalizacji musi mieścić się w zakresie od 1 do 100 sekund.";
+            }
             return wyjscie;
         }
 
         public static bool CzyPrzyznanoWszystkieDostepy()
         {
+            if(DaneORuchu.SprawdzDostep() && WiadomoscSMS.czyZainicjalizowane)
+            {
+                return true;
+            }
             return false;
         }
 

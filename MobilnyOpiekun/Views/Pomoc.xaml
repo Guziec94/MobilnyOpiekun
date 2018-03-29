@@ -5,9 +5,25 @@
     xmlns:local="using:MobilnyOpiekun.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mo="using:MobilnyOpiekun"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock Text="Nie znaleziono urządzenia, które może wysyłać SMS." FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="Przyczyn tego problemu może być kilka, warto sprawdzić czy Twoje urządzenie ma możliwość wysyłania wiadomości tekstowych (jest to bardzo prawdopodobne jeśli korzystasz z tej aplikacji na tablecie).Upewnij się, że tryb samolotowy jest wyłączony."  Margin="5,5,5,15"/>
 
-    </Grid>
+            <TextBlock Text="Urządzenie nie posiada odpowiednich czujników lub dostęp do nich jest zablokowany." FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="Jeśli urządzenie nie jest wyposażone we wszystkie wymagane czujniki to niestety nie można nic zrobić. Jednak o wiele częstszą przyczyną są niepoprawnie przyznane dostępy. Aby przyznać dostęp należy przejść do ustawień systemu Windows → Prywatność → otworzyć sekcję Lokalizacja, odnaleźć aplikację MobilnyOpiekun i przesunąć suwak do prawej strony. Tą samą czynność powtórz w sekcji Ruch." Margin="5,5,5,15"/>
+
+            <TextBlock Text="Agent nie może zostać uruchomiony z powodu napotkanych błedów." FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="Najczęstszym powodem tego błędu jest nieprawidłowa konfiguracja. Przejdź do strony Ustawienia i sprawdź czy wszystkie pola są wypełnione poprawnie." Margin="5,5,5,15"/>
+
+            <TextBlock Text="Czy mogę zmienić dźwięk powiadomienia?" FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="Tak, w systemie Windows 10 możan dowolnie modyfikować dźwięki powiadomień dla każdej aplikacji. Aby zmienić dźwięk otwórz ustawienia systemu Windows → System → Powiadomienia i akcje → odnajdź i kliknij w aplikację MobilnyOpiekun. Kliknij na listę rozwijalną Dźwięk powiadomień, a następnie wybierz melodię, która Tobie odpowiada."  Margin="5,5,5,15"/>
+
+            <TextBlock Text="Czy korzystanie z aplikacji jest płatne?" FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="Korzystanie z aplikacji jest bezpłatne. Jedyna opłata która może być naliczona to opłata związana z wysyłaniem wiadomości SMS. Jeśli agent został aktywowany to w pewnych sytuacjach może zostać wysłana wiadomość do wszystkich opiekunów. Cena wiadomości tekstowej ustalana jest według operatora sieci komórkowej." Margin="5,5,5,15"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

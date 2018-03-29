@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <RelativePanel x:Name="maskaBlokujaca" Visibility="Collapsed" Opacity=".5" Background="Gray">
-            <TextBlock Text="Funkcja niedostępna, więcej informacji znajdziesz na stronie Pomoc." Foreground="Red" FontSize="40" FontWeight="Bold" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        <RelativePanel x:Name="maskaBlokujaca"
+            Visibility="Collapsed" Opacity=".5" Background="Gray">
+            <TextBlock x:Name="txtMaskaBlokujaca"
+                Text="Funkcja niedostępna, więcej informacji znajdziesz na stronie Pomoc."
+                Foreground="Red" FontSize="40" FontWeight="Bold" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
         </RelativePanel>
         <ScrollViewer x:Name="scrlZawartosc">
             <StackPanel>
@@ -18,12 +22,14 @@
                     Margin="5"/>
                 <StackPanel x:Name="stpaOpiekunowie"
                     ScrollViewer.HorizontalScrollMode="Auto" Margin="5" MinHeight="350" MaxHeight="350">
-                    
+
                 </StackPanel>
                 <Button x:Name="btnWezwijPomoc"
                     Content="Wezwij pomoc"
-                    Margin="5" HorizontalAlignment="Center"
-                />
+                    Margin="5" HorizontalAlignment="Center" Click="btnWezwijPomoc_Click"/>
+                <TextBlock x:Name="txtOpiekunowieBlad"
+                Text="Musisz wybrać co najmniej jednego opiekuna aby wezwać pomoc."
+                Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -27,6 +27,7 @@ namespace MobilnyOpiekun.Views
 
             txtImie.Text = Konfiguracja.imie??"";
             txtNazwisko.Text = Konfiguracja.nazwisko ?? "";
+            txtMaksymalnyCzasOczekiwaniaGps.Text = Konfiguracja.maksymalnyCzasOczekiwaniaGps ?? "30";
             TimeSpan poczatek, koniec;
             if(TimeSpan.TryParse(Konfiguracja.poczatekAktywnosci, out poczatek))
             {
@@ -59,6 +60,7 @@ namespace MobilnyOpiekun.Views
             txtNazwisko_TextChanged(null, null);
             timePoczatek_TimeChanged(null, null);
             timeKoniec_TimeChanged(null, null);
+            txtMaksymalnyCzasOczekiwaniaGps_TextChanged(null, null);
             #endregion
         }
 
@@ -166,6 +168,35 @@ namespace MobilnyOpiekun.Views
             else
             {
                 txtOpiekunowieBlad.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void txtMaksymalnyCzasOczekiwaniaGps_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Konfiguracja.maksymalnyCzasOczekiwaniaGps = txtMaksymalnyCzasOczekiwaniaGps.Text;
+            int max = 0;
+            if(int.TryParse(txtMaksymalnyCzasOczekiwaniaGps.Text, out max))
+            {
+                if (max <= 0)
+                {
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Text = "Maksymalny czas oczekiwania musi być wartością dodatnią.";
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Visibility = Visibility.Visible;
+                }
+                if (max > 0 && max <= 100)
+                {
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Text = "";
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Visibility = Visibility.Collapsed;
+                }
+                if (max > 100)
+                {
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Text = "Maksymalny czas oczekiwania musi być krótszy niż 100 sekund.";
+                    txtMaksymalnyCzasOczekiwaniaGpsBlad.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                txtMaksymalnyCzasOczekiwaniaGpsBlad.Text = "Podana wartość musi być liczbą.";
+                txtMaksymalnyCzasOczekiwaniaGpsBlad.Visibility = Visibility.Visible;
             }
         }
     }

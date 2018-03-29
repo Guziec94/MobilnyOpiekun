@@ -57,6 +57,7 @@ namespace MobilnyOpiekun.Views
             }
             else
             {
+                numerTelefonu = numerTelefonu.Replace(" ", "");
                 zmodyfikowanyOpiekun = new Opiekun(nazwaKontaktu, numerTelefonu, guid);
             }
         }

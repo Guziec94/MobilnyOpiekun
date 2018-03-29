@@ -33,11 +33,6 @@ namespace MobilnyOpiekun
             }
         }
 
-        public static void Save(string value)
-        {
-            ApplicationData.Current.LocalSettings.Values["value"] = value;
-        }
-
         public static async Task<bool> Toggle()
         {
             if (IsWorking)
@@ -55,10 +50,13 @@ namespace MobilnyOpiekun
                 {
                     try
                     {
+                        ApplicationData.Current.LocalSettings.Values["czyAgentWykonujePrace"] = false;
+                        BackgroundExecutionManager.RemoveAccess(); // This is the magic line!
                         await BackgroundExecutionManager.RequestAccessAsync();
                         BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
                         builder.Name = typeof(Background.MojTrigger).FullName;
                         builder.SetTrigger(new TimeTrigger(15, false));
+                        builder.SetTrigger(new SystemTrigger(SystemTriggerType.TimeZoneChange, false));
                         builder.TaskEntryPoint = builder.Name;
                         builder.Register();
                         registration = BackgroundTaskRegistration.AllTasks.Values.First();

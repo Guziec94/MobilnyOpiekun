@@ -174,10 +174,11 @@ namespace MobilnyOpiekun.Classes
             {
                 Name = "stpaOpiekun",
                 Orientation = Orientation.Horizontal,
-                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 Background = new SolidColorBrush(Colors.WhiteSmoke),
                 Margin = new Thickness(5)
             };
+            rezultat.Tapped += Rezultat_Tapped;
 
             StackPanel stpaInformacjeOgolne = new StackPanel()
             {
@@ -189,7 +190,7 @@ namespace MobilnyOpiekun.Classes
             {
                 Name = "txtNazwaOpiekuna",
                 Text = this.nazwa,
-                Width = 230,
+                Width = 290,
                 Margin = new Thickness(5),
                 TextWrapping = TextWrapping.Wrap
             };
@@ -201,7 +202,7 @@ namespace MobilnyOpiekun.Classes
                 Text = this.numerTelefonu,
                 FontStyle = Windows.UI.Text.FontStyle.Italic,
                 Width = 290,
-                Margin = new Thickness(5, 0, 5, 5),
+                Margin = new Thickness(5),
                 TextWrapping = TextWrapping.Wrap
             };
             stpaInformacjeOgolne.Children.Add(numerTelefonu);
@@ -218,6 +219,21 @@ namespace MobilnyOpiekun.Classes
             rezultat.Children.Add(btnEdytuj);
 
             return rezultat;
+        }
+
+        private void Rezultat_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            SolidColorBrush aktualnyKolor = (sender as StackPanel).Background as SolidColorBrush;
+            if (aktualnyKolor.Color == Colors.Lime)
+            {
+                (sender as StackPanel).Background = new SolidColorBrush(Colors.WhiteSmoke);
+                KlasaPomocniczna.opiekunowieWybraniDoPomocy.Remove(this);
+            }
+            else
+            {
+                (sender as StackPanel).Background = new SolidColorBrush(Colors.Lime);
+                KlasaPomocniczna.opiekunowieWybraniDoPomocy.Add(this);
+            }
         }
     }
 }

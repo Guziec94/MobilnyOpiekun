@@ -7,7 +7,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Grid>
+        <RelativePanel x:Name="maskaBlokujaca"
+                Visibility="Collapsed" Opacity=".5" Background="Gray">
+            <TextBlock x:Name="txtMaskaBlokujaca"
+                    Text="Funkcja niedostępna, więcej informacji znajdziesz na stronie Pomoc."
+                    Foreground="Red" FontSize="40" FontWeight="Bold" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        </RelativePanel>
+        <ScrollViewer x:Name="scrlZawartosc"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <StackPanel>
+                <TextBlock Text="Przebyte kroki dzisiaj" HorizontalAlignment="Stretch" Margin="5"/>
+                <TextBlock x:Name="txtKrokiDzien" Text="3154" FontSize="20" Margin="5"/>
+
+                <TextBlock Text="Przebyte kroki w ciągu ostatnich 7 dni" HorizontalAlignment="Stretch" Margin="5"/>
+                <TextBlock x:Name="txtKrokiTydzien" Text="19431" FontSize="20" Margin="5"/>
+                
+                <Rectangle Style="{StaticResource ResourceKey=separator}"/>
+
+                <TextBlock Text="Rodzaj aktywności w ciagu ostanich 24 godzin" HorizontalAlignment="Stretch" Margin="5"/>
+                <TextBlock Text="W ruchu" HorizontalAlignment="Stretch" Margin="5"/>
+                <ProgressBar x:Name="progWRuchu" Height="25" VerticalAlignment="Stretch" Margin="10,0,10,10" Value="13"/>
+
+                <TextBlock Text="W miejscu" HorizontalAlignment="Stretch" Margin="5"/>
+                <ProgressBar x:Name="progWMiejscu" Height="25" VerticalAlignment="Stretch" Margin="10,0,10,10" Value="85"/>
+
+                <Rectangle Style="{StaticResource ResourceKey=separator}"/>
+
+                <TextBlock Text="Rodzaj aktywności w ciagu ostanich 7 dni" HorizontalAlignment="Stretch" Margin="5"/>
+                <TextBlock Text="W ruchu" HorizontalAlignment="Stretch" Margin="5"/>
+                <ProgressBar x:Name="prog30WRuchu" Height="25" VerticalAlignment="Stretch" Margin="10,0,10,10" Value="26"/>
+
+                <TextBlock Text="W miejscu" HorizontalAlignment="Stretch" Margin="5"/>
+                <ProgressBar x:Name="prog30WMiejscu" Height="25" VerticalAlignment="Stretch" Margin="10,0,10,10" Value="72"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

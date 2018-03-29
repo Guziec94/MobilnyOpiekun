@@ -19,12 +19,15 @@
                 Text="Nazwisko nie może być puste."
                 Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
 
-            <TimePicker x:Name="timePoczatek" Header="Orientacyjny początek dnia" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timePoczatek_TimeChanged"/>
-            <TimePicker x:Name="timeKoniec" Header="Orientacyjny koniec dnia" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timeKoniec_TimeChanged"/>
+            <Rectangle Style="{StaticResource ResourceKey=separator}"/>
+
+            <TimePicker x:Name="timeKoniec" Header="Początek snu" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timeKoniec_TimeChanged"/>
+            <TimePicker x:Name="timePoczatek" Header="Koniec snu" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TimeChanged="timePoczatek_TimeChanged"/>
             <TextBlock x:Name="txtTimeBlad"
-                Text="Podany zakres czasu aktywności jest niepoprawny."
+                Text="Podany okres snu jest niepoprawny."
                 Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
 
+            <Rectangle Style="{StaticResource ResourceKey=separator}"/>
 
             <TextBlock Text="Osoby, które będą otrzymywać powiadomienia o Twojej aktywności ruchowej - opiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top"/>
             <StackPanel x:Name="stpaOpiekunowie" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" MinHeight="25" SizeChanged="stpaOpiekunowie_SizeChanged">
@@ -35,16 +38,24 @@
                 Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
             <Button x:Name="btnDodajOpiekuna" Content="Dodaj opiekuna" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Click="btnDodajOpiekuna_Click"/>
 
+            <Rectangle Style="{StaticResource ResourceKey=separator}"/>
+            
+            <TextBlock
+                Text="Maksymalny czas oczekiwania na pobranie lokalizacji (wyrażony w sekundach)."
+                Margin="5" TextAlignment="Left"/>
+            <TextBox x:Name="txtMaksymalnyCzasOczekiwaniaGps" Text="" InputScope="Digits" MaxLength="3" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" TextChanged="txtMaksymalnyCzasOczekiwaniaGps_TextChanged"/>
+            <TextBlock x:Name="txtMaksymalnyCzasOczekiwaniaGpsBlad"
+                Foreground="Red" Visibility="Collapsed" Margin="5,0,5,10"/>
 
+            <Rectangle Style="{StaticResource ResourceKey=separator}"/>
+            
             <TextBlock
                 x:Name="txtBladOgolny"
                 Text="Popraw wyszczególnione błędy, a następnie kliknij przycisk 'Zapisz zmiany' jeszcze raz."
                 Foreground="Red" Visibility="Collapsed" Margin="10" TextAlignment="Center"/>
 
-
             <Button x:Name="btnZachowajUstawienia" Content="Zapisz zmiany" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" Click="btnZachowajUstawienia_Click"/>
             <Button x:Name="btnOdrzucUstawienia" Content="Odrzuć zmiany" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" Click="btnOdrzucUstawienia_Click"/>
-        
         </StackPanel>
     </ScrollViewer>
 </Page>
